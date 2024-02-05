@@ -91,3 +91,17 @@ class PlanDiscountAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.PlanDiscount, PlanDiscountAdmin)
+
+
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ("user", "image_tag", "mobile")
+
+
+admin.site.register(models.Subscriber, SubscriberAdmin)
+
+
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ("user", "plan", "price")
+
+
+admin.site.register(models.Subscription, SubscriptionAdmin)
