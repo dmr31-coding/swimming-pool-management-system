@@ -67,23 +67,21 @@ def pricing(request):
     return render(
         request, "bootstrap/pricing.html", {"plans": pricing, "dfeatures": dfeatures}
     )
-    
+
+
 # SignUp
 def signup(request):
-    msg=None
-    if request.method == "POST":
-        form = forms.SignUp(request.POST)
-        if form.is_valid():
-            form.save()
-            msg = 'Thank you for register.'
-    form = forms.SignUp
-    return render(request, "registration/signup.html", {'form': form, 'msg': msg})
-    
+	msg=None
+	if request.method=='POST':
+		form=forms.SignUp(request.POST)
+		if form.is_valid():
+			form.save()
+			msg='Thank you for register.'
+	form=forms.SignUp
+	return render(request, 'registration/signup.html',{'form':form,'msg':msg})
 
 
 # Checkout
 def checkout(request, plan_id):
     planDetail = models.SubPlan.objects.get(pk=plan_id)
-    return render(
-        request, "bootstrap/checkout.html", {"plan": planDetail}
-    )
+    return render(request, "bootstrap/checkout.html", {"plan": planDetail})

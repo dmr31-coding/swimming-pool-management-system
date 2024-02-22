@@ -40,7 +40,7 @@
 	
                                     <th>Name</th>
 	
-                                    <td>{{ plan.tite }}</td>
+                                    <td>{{ plan.title }}</td>
 	
                                 </tr>
 	
@@ -48,7 +48,7 @@
 	
                                     <th>Price</th>
 	
-                                    <td>{{ plan.price }}</td>
+                                    <td>${{ plan.price }}</td>
 	
                                 </tr>
 	
@@ -108,7 +108,7 @@
                                         </td>
 	
                                         <th>
-                                            <label for="validity{{ discount.id }}">{{ discount.total_months }}</label>
+                                            <label for="validity{{ discount.id }}">{{ discount.total_months }} Month</label>
                                         </th>
 	
                                         <td>{{ discount.total_discount }}%</td>
@@ -142,11 +142,11 @@
                     <tr>
 	
                         <td colspan="2"></td>
-	
-                        <td>
-                            <input type="submit" value="Proceed to Payment" class="btn btn-primary" />
-                        </td>
-	
+                        <form method="POST" action="#">
+                            <td>
+                                <input type="submit" value="Proceed to Payment" class="btn btn-primary" />
+                            </td>
+                        </form>
                     </tr>
                 </tfoot>
 	
