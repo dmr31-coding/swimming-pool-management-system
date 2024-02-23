@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from . import models
 
@@ -71,17 +71,56 @@ def pricing(request):
 
 # SignUp
 def signup(request):
-	msg=None
-	if request.method=='POST':
-		form=forms.SignUp(request.POST)
-		if form.is_valid():
-			form.save()
-			msg='Thank you for register.'
-	form=forms.SignUp
-	return render(request, 'registration/signup.html',{'form':form,'msg':msg})
+    msg = None
+    if request.method == "POST":
+        form = forms.SignUp(request.POST)
+        if form.is_valid():
+            form.save()
+            msg = "Thank you for register."
+    form = forms.SignUp
+    return render(request, "registration/signup.html", {"form": form, "msg": msg})
 
 
 # Checkout
 def checkout(request, plan_id):
     planDetail = models.SubPlan.objects.get(pk=plan_id)
     return render(request, "bootstrap/checkout.html", {"plan": planDetail})
+
+
+# User dashboard section
+def user_dashboard(request):
+    return render(request, "user/dashboard.html")
+
+
+# Edit Form
+def update_profile(request):
+    msg = None
+    if request.method == "POST":
+        form = forms.ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            msg = "Data has been saved"
+    form = forms.ProfileForm(instance=request.user)
+    return render(request, "user/update_profile.html", {"form": form, "msg": msg})
+
+
+# Trainer Login
+def trainerlogin(request):
+    msg = ""
+    if request.method == "POST":
+        username = request.POST["username"]
+        pwd = request.POST["pwd"]
+        trainer = models.Trainer.objects.filter(username=username, pwd=pwd).count()
+        if trainer > 0:
+            request.session["tranerLogin"] = True
+            return redirect("/trainer_dashboard")
+        else:
+            msg = "Invalid!!"
+    form = forms.TrainerLoginForm
+    return render(request, "trainer/trainerlogin.html", {"form": form, "msg": msg})
+
+
+# Trainer Logout
+def trainerlogout(request):
+    del request.session["trainerLogin"]
+    return redirect("/trainerlogin")

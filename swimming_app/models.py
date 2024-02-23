@@ -4,6 +4,10 @@ from django.utils.html import mark_safe
 
 from django.contrib.auth.models import User
 
+from django.db.models.signals import post_save
+
+from django.dispatch import receiver
+
 
 # Banners
 class Banners(models.Model):
@@ -127,7 +131,16 @@ class Subscriber(models.Model):
         return str(self.user)
 
     def image_tag(self):
-        return mark_safe('<img src="%s" width="80" />' % (self.img.url))
+        if self.img:
+            return mark_safe('<img src="%s" width="80" />' % (self.img.url))
+        else:
+            return "no-img"
+
+
+@receiver(post_save, sender=User)
+def create_subscriber(sender, instance, created, **kwargs):
+    if created:
+        Subscriber.objects.create(user=instance)
 
 
 # Subscription
@@ -135,3 +148,24 @@ class Subscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     plan = models.ForeignKey(SubPlan, on_delete=models.CASCADE, null=True)
     price = models.CharField(max_length=50)
+
+
+# Trainer Model
+class Trainer(models.Model):
+    full_name = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, null=True)
+    pwd = models.CharField(max_length=50, null=True)
+    mobile = models.CharField(max_length=100)
+    address = models.TextField()
+    is_active = models.BooleanField(default=False)
+    detail = models.TextField()
+    img = models.ImageField(upload_to="trainers/", null=True)
+
+    def __str__(self):
+        return str(self.full_name)
+
+    def image_tag(self):
+        if self.img:
+            return mark_safe('<img src="%s" width="80" />' % (self.img.url))
+        else:
+            return "no-img"

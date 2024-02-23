@@ -15,6 +15,12 @@ urlpatterns = [
     path("pricing", views.pricing, name="pricing"),
     path("signup", views.signup, name="signup"),
     path("checkout/<int:plan_id>", views.checkout, name="checkout"),
+    # User dashboard section start
+    path("user-dashboard", views.user_dashboard, name="user_dashboard"),
+    path("update-profile", views.update_profile, name="update_profile"),
+    # Trainer login
+    path("trainerlogin", views.trainerlogin, name="trainerlogin"),
+    path("trainerlogout", views.trainerlogout, name="trainerlogout"),
 ]
 
 
