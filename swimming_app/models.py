@@ -8,6 +8,8 @@ from django.db.models.signals import post_save
 
 from django.dispatch import receiver
 
+import json
+
 
 # Banners
 class Banners(models.Model):
@@ -169,3 +171,36 @@ class Trainer(models.Model):
             return mark_safe('<img src="%s" width="80" />' % (self.img.url))
         else:
             return "no-img"
+
+
+# Notifications Json Response Via Ajax
+class Notify(models.Model):
+    notify_detail = models.TextField()
+    read_by_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True
+    )
+    read_by_trainer = models.ForeignKey(
+        Trainer, on_delete=models.CASCADE, null=True, blank=True
+    )
+
+    def __str__(self):
+        return str(self.notify_detail)
+
+
+# Markas Read Notification By User
+class NotifUserStatus(models.Model):
+    notif = models.ForeignKey(Notify, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "Notification Status"
+
+
+# Assig subsctriber to Trainer
+class AssignSubscriber(models.Model):
+    user = models.ForeignKey(Subscriber, on_delete=models.CASCADE, null=True)
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.user)

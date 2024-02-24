@@ -21,6 +21,12 @@ urlpatterns = [
     # Trainer login
     path("trainerlogin", views.trainerlogin, name="trainerlogin"),
     path("trainerlogout", views.trainerlogout, name="trainerlogout"),
+    # Notification
+    path("notifs", views.notifs, name="notifs"),
+    path('get_notifs',views.get_notifs,name='get_notifs'),
+	path('mark_read_notif',views.mark_read_notif,name='mark_read_notif'),
+    
+    
 ]
 
 
