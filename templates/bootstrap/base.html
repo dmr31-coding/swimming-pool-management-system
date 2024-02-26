@@ -73,6 +73,7 @@
                                 {% if not request.user.is_authenticated %}
  
                                     {% if request.session.trainerLogin %}
+                                    <li><a class="dropdown-item" href="{% url 'trainer_dashboard' %}"> Trainer Dashboard</a></li>
                                         <li>
                                             <a class="dropdown-item" href="{% url 'trainerlogout' %}">Trainer Logout</a>
                                         </li>

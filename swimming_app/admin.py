@@ -69,6 +69,7 @@ class SubPlanAdmin(admin.ModelAdmin):
         "title",
         "price",
         "max_member",
+        "validity_days",
         "highlight_status",
     )
 
@@ -101,7 +102,7 @@ admin.site.register(models.Subscriber, SubscriberAdmin)
 
 
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ("user", "plan", "price")
+    list_display = ("user", "plan", "reg_date", "price")
 
 
 admin.site.register(models.Subscription, SubscriptionAdmin)
@@ -112,6 +113,7 @@ class TrainerAdmin(admin.ModelAdmin):
     list_display = (
         "full_name",
         "mobile",
+        "salary",
         "is_active",
         "image_tag",
     )
@@ -143,3 +145,13 @@ class AssignSubscriberAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.AssignSubscriber, AssignSubscriberAdmin)
+
+
+class TrainerAchivementAdmin(admin.ModelAdmin):
+	list_display=('title','image_tag')
+admin.site.register(models.TrainerAchivement,TrainerAchivementAdmin)
+
+
+class TrainerSalaryAdmin(admin.ModelAdmin):
+	list_display=('trainer','amt','amt_date')
+admin.site.register(models.TrainerSalary,TrainerSalaryAdmin)

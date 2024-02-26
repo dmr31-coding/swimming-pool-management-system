@@ -16,6 +16,9 @@ class Banners(models.Model):
     img = models.ImageField(upload_to="banners/")
     alt_text = models.CharField(max_length=150)
 
+    class Meta:
+        verbose_name_plural = "Banners"
+
     def __str__(self):
         return self.alt_text
 
@@ -97,6 +100,7 @@ class SubPlan(models.Model):
     price = models.IntegerField()
     max_member = models.IntegerField(null=True)
     highlight_status = models.BooleanField(default=False, null=True)
+    validity_days = models.IntegerField(null=True)
 
     def __str__(self):
         return self.title
@@ -150,6 +154,7 @@ class Subscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     plan = models.ForeignKey(SubPlan, on_delete=models.CASCADE, null=True)
     price = models.CharField(max_length=50)
+    reg_date = models.DateField(auto_now_add=True, null=True)
 
 
 # Trainer Model
@@ -162,6 +167,12 @@ class Trainer(models.Model):
     is_active = models.BooleanField(default=False)
     detail = models.TextField()
     img = models.ImageField(upload_to="trainers/", null=True)
+    salary = models.IntegerField(default=0)
+
+    facebook = models.CharField(max_length=50, null=True)
+    twitter = models.CharField(max_length=50, null=True)
+    pinterest = models.CharField(max_length=50, null=True)
+    youtube = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return str(self.full_name)
@@ -197,10 +208,41 @@ class NotifUserStatus(models.Model):
         verbose_name_plural = "Notification Status"
 
 
-# Assig subsctriber to Trainer
+# Assign Subscriber to Trainer
 class AssignSubscriber(models.Model):
-    user = models.ForeignKey(Subscriber, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.user)
+
+
+# Trainer Achivements
+class TrainerAchivement(models.Model):
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    detail = models.TextField()
+    img = models.ImageField(upload_to="trainers_achivements/")
+
+    def __str__(self):
+        return str(self.title)
+
+    def image_tag(self):
+        if self.img:
+            return mark_safe('<img src="%s" width="80" />' % (self.img.url))
+        else:
+            return "no-image"
+
+
+# TrainerSalary Model
+class TrainerSalary(models.Model):
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+    amt = models.IntegerField()
+    amt_date = models.DateField()
+    remarks = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = "Trainer Salary"
+
+    def __str__(self):
+        return str(self.trainer.full_name)

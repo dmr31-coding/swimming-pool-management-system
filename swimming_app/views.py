@@ -72,8 +72,13 @@ def gallery_detail(request, id):
 
 # Subcription plan
 def pricing(request):
-    pricing = models.SubPlan.objects.all().order_by("price")
+    pricing = (
+        models.SubPlan.objects.annotate(total_members=Count("subscription__id"))
+        .all()
+        .order_by("price")
+    )
     dfeatures = models.SubPlanFeature.objects.all()
+
     return render(
         request, "bootstrap/pricing.html", {"plans": pricing, "dfeatures": dfeatures}
     )
@@ -97,9 +102,12 @@ def checkout(request, plan_id):
     return render(request, "bootstrap/checkout.html", {"plan": planDetail})
 
 
-# User dashboard section
+# User Dashboard Section Start
 def user_dashboard(request):
-    return render(request, "user/dashboard.html")
+    current_plan = models.Subscription.objects.get(user=request.user)
+    my_trainer = models.AssignSubscriber.objects.get(user=request.user)
+    enddate = current_plan.reg_date + timedelta(days=current_plan.plan.validity_days)
+    return redirect("home")
 
 
 # Edit Form
@@ -122,7 +130,9 @@ def trainerlogin(request):
         pwd = request.POST["pwd"]
         trainer = models.Trainer.objects.filter(username=username, pwd=pwd).count()
         if trainer > 0:
+            trainer = models.Trainer.objects.filter(username=username, pwd=pwd).first()
             request.session["tranerLogin"] = True
+            request.session["tranerid"] = trainer.id
             return redirect("/trainer_dashboard")
         else:
             msg = "Invalid!!"
@@ -134,6 +144,26 @@ def trainerlogin(request):
 def trainerlogout(request):
     del request.session["trainerLogin"]
     return redirect("/trainerlogin")
+
+
+# Trainer Dashboard
+def trainer_dashboard(request):
+    return render(request, "trainer/dashboard.html")
+
+
+# Trainer Profile
+def trainer_profile(request):
+    t_id = request.session["tranerid"]
+    trainer = models.Trainer.objects.get(pk=t_id)
+    msg = None
+    if request.method == "POST":
+        form = forms.TrainerProfileForm(request.POST, request.FILES, instance=trainer)
+        if form.is_valid():
+            form.save()
+            msg = "Profile has been updated."
+
+    form = forms.TrainerProfileForm(instance=trainer)
+    return render(request, "trainer/profile.html", {"form": form, "msg": msg})
 
 
 # Notifications
@@ -173,5 +203,3 @@ def mark_read_notif(request):
     user = request.user
     models.NotifUserStatus.objects.create(notif=notif, user=user, status=True)
     return JsonResponse({"bool": True})
-
-

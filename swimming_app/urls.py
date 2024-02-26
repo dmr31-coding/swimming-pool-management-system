@@ -16,17 +16,17 @@ urlpatterns = [
     path("signup", views.signup, name="signup"),
     path("checkout/<int:plan_id>", views.checkout, name="checkout"),
     # User dashboard section start
-    path("user-dashboard", views.user_dashboard, name="user_dashboard"),
-    path("update-profile", views.update_profile, name="update_profile"),
+    path("user_dashboard", views.user_dashboard, name="user_dashboard"),
+    path("update_profile", views.update_profile, name="update_profile"),
     # Trainer login
     path("trainerlogin", views.trainerlogin, name="trainerlogin"),
     path("trainerlogout", views.trainerlogout, name="trainerlogout"),
+    path("trainer_dashboard", views.trainer_dashboard, name="trainer_dashboard"),
+    path("trainer_profile", views.trainer_profile, name="trainer_profile"),
     # Notification
     path("notifs", views.notifs, name="notifs"),
-    path('get_notifs',views.get_notifs,name='get_notifs'),
-	path('mark_read_notif',views.mark_read_notif,name='mark_read_notif'),
-    
-    
+    path("get_notifs", views.get_notifs, name="get_notifs"),
+    path("mark_read_notif", views.mark_read_notif, name="mark_read_notif"),
 ]
 
 

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "swimming_app",
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
@@ -151,6 +152,7 @@ JAZZMIN_SETTINGS = {
         "Swimming_App.Faq",
         "Swimming_App.SubPlan",
         "Swimming_App.SubPlanFeature",
+        
     ],
 }
 

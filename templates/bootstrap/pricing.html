@@ -1,7 +1,11 @@
 
 {% extends "bootstrap/base.html" %}
 
+
+{% load mathfilters %}
 {% load static %}
+
+
 
 {% block content %}
 
@@ -17,6 +21,7 @@
             <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
 
                 {% for plan in plans %}
+ 
                     <div class="col">
  
                         <div class="card mb-4 rounded-3 shadow-sm
@@ -30,9 +35,9 @@
                                 </div>
                                 <div class="card-body">
                                     <h1 class="card-title pricing-card-title">
-                                        ${{ plan.price }}<small class="text-muted fw-light">/mo</small>
+                                        ${{ plan.price }}<small class="text-muted fw-light">/{{ plan.validity_days }} Days</small>
                                     </h1>
-                                    <p class="text-success">Member Capacity = {{ plan.max_member }}</p>
+                                    <p class="text-success">Member Capacity = {{ plan.max_member|sub:plan.total_members }}</p>
                                     <ul class="list-unstyled mt-3 mb-4">
                                         {% for feature in plan.subplanfeature_set.all %}<li>{{ feature.title }}</li>{% endfor %}
  
