@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -40,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "swimming_app",
-    'mathfilters',
+    "mathfilters",
 ]
 
 MIDDLEWARE = [
@@ -72,7 +73,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "SWIMMING.wsgi.application"
+# WSGI_APPLICATION = "SWIMMING.wsgi.application"
+ASGI_APPLICATION = "SWIMMING.asgi.application"
 
 
 # Database
@@ -152,10 +154,18 @@ JAZZMIN_SETTINGS = {
         "Swimming_App.Faq",
         "Swimming_App.SubPlan",
         "Swimming_App.SubPlanFeature",
-        
     ],
 }
 
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}

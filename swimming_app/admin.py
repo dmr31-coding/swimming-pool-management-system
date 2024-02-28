@@ -148,10 +148,26 @@ admin.site.register(models.AssignSubscriber, AssignSubscriberAdmin)
 
 
 class TrainerAchivementAdmin(admin.ModelAdmin):
-	list_display=('title','image_tag')
-admin.site.register(models.TrainerAchivement,TrainerAchivementAdmin)
+    list_display = ("title", "image_tag")
+
+
+admin.site.register(models.TrainerAchivement, TrainerAchivementAdmin)
 
 
 class TrainerSalaryAdmin(admin.ModelAdmin):
-	list_display=('trainer','amt','amt_date')
-admin.site.register(models.TrainerSalary,TrainerSalaryAdmin)
+    list_display = ("trainer", "amt", "amt_date")
+
+
+admin.site.register(models.TrainerSalary, TrainerSalaryAdmin)
+
+
+class TrainerNotificationAdmin(admin.ModelAdmin):
+    list_display = ("notif_msg",)
+
+
+admin.site.register(models.TrainerNotification, TrainerNotificationAdmin)
+
+
+class TrainerNotificationStatusAdmin(admin.ModelAdmin):
+	list_display=('notif',)
+admin.site.register(models.NotifTrainerStatus,TrainerNotificationStatusAdmin)

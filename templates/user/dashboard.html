@@ -14,11 +14,9 @@
                                 <h4 class="card-header">Current Package</h4>
                                 <div class="card-body">
                                     <h6 class="card_text">{{ current_plan.plan }}</h6>
-                                    <p ">Price:{{ current_plan.price }}
-                                    </p>
-                                    <p">Purchase date:{{ current_plan.reg_date }}</p>
-                                    <p">Expiry date:{{ enddate }}
-                                    </p>
+                                    <p>Price:{{ current_plan.price }}</p>
+                                    <p>Purchase date:{{ current_plan.reg_date }}</p>
+                                    <p>Expiry date:{{ enddate }}</p>
                                 </div>
                             </div>
                         </div>
@@ -69,13 +67,14 @@
                                                         </thead>
                                                         <tbody>
                                                             {% for achieve in my_trainer.trainer.trainerachievement_set.all %}
-                                                            <tr>
-                                                                <td>{{ achieve.title }}</td>
-                                                                <td>
-                                                                    <img src="{{ achieve.img.url }}" width="80">
-                                                                </td>
-                                                                <td>{{ achieve.detail }}</td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td>{{ achieve.title }}</td>
+                                                                    <td>
+                                                                        <img src="{{ achieve.img.url }}" width="80">
+                                                                    </td>
+                                                                    <td>{{ achieve.detail }}</td>
+                                                                </tr>
+                                                            {% endfor %}
                                                         </tbody>
                                                     </table>
                                                 </div>

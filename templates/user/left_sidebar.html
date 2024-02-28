@@ -1,5 +1,7 @@
 <div class="list-group">
-   <a href="{% url 'user_dashboard' %}" class="list-group-item">Dashboard</a>
+   <a href="{% url 'user_dashboard' %}"
+      class="list-group-item
+             {% if request.path == '/user-dashboard' %}active{% endif %}">Dashboard</a>
    <a href="{% url 'update_profile' %}"
       class="list-group-item
              {% if request.path == '/update_profile' %}active{% endif %}">Profile</a>

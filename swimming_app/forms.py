@@ -34,8 +34,13 @@ class TrainerLoginForm(forms.ModelForm):
     class Meta:
         model = models.Trainer
         fields = ("username", "pwd")
-        
+
+
 class TrainerProfileForm(forms.ModelForm):
     class Meta:
         model = models.Trainer
         fields = ("full_name", "mobile", "address", "detail", "img")
+
+
+class TrainerChangePassword(forms.Form):
+    new_password = forms.CharField(max_length=50, required=True)
