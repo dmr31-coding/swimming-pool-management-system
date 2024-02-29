@@ -10,6 +10,7 @@ urlpatterns = [
     path("pagedetail/<int:id>", views.page_detail, name="pagedetail"),
     path("faq", views.faq_list, name="faq"),
     path("enquiry", views.enquiry, name="enquiry"),
+    path('contact',views.contact_page,name='contact_page'),
     path("gallery", views.gallery, name="gallery"),
     path("gallerydetail/<int:id>", views.gallery_detail, name="gallerydetail"),
     path("pricing", views.pricing, name="pricing"),
@@ -42,6 +43,8 @@ urlpatterns = [
         views.mark_read_trainer_notif,
         name="mark_read_trainer_notif",
     ),
+    path("report_for_user", views.report_for_user, name="report_for_user"),
+    path("report_for_trainer", views.report_for_trainer, name="report_for_trainer"),
 ]
 
 

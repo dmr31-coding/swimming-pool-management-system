@@ -41,6 +41,11 @@ def faq_list(request):
     return render(request, "bootstrap/faq.html", {"faqs": faq})
 
 
+# Contact
+def contact_page(request):
+    return render(request, "user/contact.html")
+
+
 # Enquiry
 def enquiry(request):
     msg = ""
@@ -298,7 +303,7 @@ def trainer_notifs(request):
 def mark_read_trainer_notif(request):
     notif = request.GET["notif"]
     notif = models.TrainerNotification.objects.get(pk=notif)
-    trainer = models.Trainer.objects.get(id=request.session["trainerid"])
+    trainer = models.Trainer.objects.get(id=request.session["tranerid"])
     models.NotifTrainerStatus.objects.create(notif=notif, trainer=trainer, status=True)
 
     # Count Unread
@@ -323,3 +328,37 @@ def mark_read_trainer_notif(request):
 def trainer_msgs(request):
     data = models.TrainerMsg.objects.all().order_by("-id")
     return render(request, "trainer/msgs.html", {"msgs": data})
+
+
+# Report for user
+def report_for_user(request):
+    trainer = models.Trainer.objects.get(id=request.session["tranerid"])
+    msg = ""
+    if request.method == "POST":
+        form = forms.ReportForUserForm(request.POST)
+        if form.is_valid():
+            new_form = form.save(commit=False)
+            new_form.report_from_trainer = trainer
+            new_form.save()
+            msg = "Data has been saved"
+        else:
+            msg = "Invalid Response!!"
+    form = forms.ReportForUserForm
+    return render(request, "report_for_user.html", {"form": form, "msg": msg})
+
+
+# Report for trainer
+def report_for_trainer(request):
+    user = request.user
+    msg = ""
+    if request.method == "POST":
+        form = forms.ReportForTrainerForm(request.POST)
+        if form.is_valid():
+            new_form = form.save(commit=False)
+            new_form.report_from_user = user
+            new_form.save()
+            msg = "Data has been saved"
+        else:
+            msg = "Invalid Response!!"
+    form = forms.ReportForTrainerForm
+    return render(request, "report_for_trainer.html", {"form": form, "msg": msg})

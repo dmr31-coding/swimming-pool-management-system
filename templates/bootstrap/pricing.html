@@ -1,11 +1,9 @@
 
 {% extends "bootstrap/base.html" %}
-
+{% load check_package %}
 
 {% load mathfilters %}
 {% load static %}
-
-
 
 {% block content %}
 
@@ -43,8 +41,19 @@
  
                                     </ul>
                                     {% if request.user.is_authenticated %}
-                                        <a href="{% url 'checkout' plan.id %}"
-                                           class="w-100 btn btn-lg btn-outline-primary">Get started</a>
+                                        {% check_user_package request.user.id plan.id as check_pckg %}
+                                        {% check_pckg_validity request.user.id plan.id as check_validity %}
+                                        {% if check_pckg %}
+                                            {% if check_validity %}
+                                                <a href="{% url 'checkout' plan.id %}"
+                                                   class="w-100 btn btn-lg btn-outline-primary">Get started</a>
+                                            {% else %}
+                                                <a href="#" class="w-100 btn btn-lg btn-dark disabled">Purchased</a>
+                                            {% endif %}
+                                        {% else %}
+                                            <a href="{% url 'checkout' plan.id %}"
+                                               class="w-100 btn btn-lg btn-outline-primary">Get started</a>
+                                        {% endif %}
                                     {% else %}
                                         <a href="{% url 'login' %}" class="w-100 btn btn-lg btn-outline-primary">Get started</a>
                                     {% endif %}

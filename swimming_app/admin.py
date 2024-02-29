@@ -169,5 +169,36 @@ admin.site.register(models.TrainerNotification, TrainerNotificationAdmin)
 
 
 class TrainerNotificationStatusAdmin(admin.ModelAdmin):
-	list_display=('notif',)
-admin.site.register(models.NotifTrainerStatus,TrainerNotificationStatusAdmin)
+    list_display = ("notif",)
+
+
+admin.site.register(models.NotifTrainerStatus, TrainerNotificationStatusAdmin)
+
+
+# SubscriberMsg
+class TrainerMsgAdmin(admin.ModelAdmin):
+    list_display = ("user", "trainer", "message")
+
+
+admin.site.register(models.TrainerMsg, TrainerMsgAdmin)
+
+
+# Report For user
+class TrainerSubscriberReportAdmin(admin.ModelAdmin):
+    list_display = (
+        "report_msg",
+        "report_for_trainer",
+        "report_for_user",
+        "report_from_trainer",
+        "report_from_user",
+    )
+
+
+admin.site.register(models.TrainerSubscriberReport, TrainerSubscriberReportAdmin)
+
+
+class AppSettingAdmin(admin.ModelAdmin):
+    list_display = ("image_tag",)
+
+
+admin.site.register(models.AppSetting, AppSettingAdmin)

@@ -23,7 +23,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
  
             <div class="container">
-                <a class="navbar-brand" href="{% url 'home' %}">Splash Swimming</a>
+                <a class="navbar-brand" href="{% url 'home' %}">{{logo}}</a>
  
                 <button class="navbar-toggler"
                         type="button"
@@ -73,7 +73,9 @@
                                 {% if not request.user.is_authenticated %}
  
                                     {% if request.session.trainerLogin %}
-                                    <li><a class="dropdown-item" href="{% url 'trainer_dashboard' %}"> Trainer Dashboard</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'trainer_dashboard' %}">Trainer Dashboard</a>
+                                        </li>
                                         <li>
                                             <a class="dropdown-item" href="{% url 'trainerlogout' %}">Trainer Logout</a>
                                         </li>
@@ -133,7 +135,8 @@
                 © 2017–2021 Arnold GYM, Inc. ·
                 <a href="{% url 'pagedetail' 2 %}">Privacy</a> ·
                 <a href="{% url 'pagedetail' 3 %}">Terms</a> .
-                <a href="{% url 'faq' %}">FAQ</a>
+                <a href="{% url 'faq' %}">FAQ</a> .
+                <a href="{% url 'contact_page' %}">Contact Us</a> .
             </p>
         </footer>
 
