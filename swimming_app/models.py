@@ -284,25 +284,41 @@ class NotifTrainerStatus(models.Model):
 
 # SubscriberMsg
 class TrainerMsg(models.Model):
-	user=models.ForeignKey(User, on_delete=models.CASCADE,null=True)
-	trainer=models.ForeignKey(Trainer, on_delete=models.CASCADE,null=True)
-	message=models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE, null=True)
+    message = models.TextField()
 
-	class Meta:
-		verbose_name_plural='Messages For Trainer'
-  
-  
+    class Meta:
+        verbose_name_plural = "Messages For Trainer"
+
+
 # Reports
 class TrainerSubscriberReport(models.Model):
-	report_for_trainer=models.ForeignKey(Trainer, on_delete=models.CASCADE,null=True,related_name='report_for_trainer')
-	report_for_user=models.ForeignKey(User, on_delete=models.CASCADE,null=True,related_name='report_for_user')
-	report_from_trainer=models.ForeignKey(Trainer, on_delete=models.CASCADE,null=True,related_name='report_from_trainer',blank=True)
-	report_from_user=models.ForeignKey(User, on_delete=models.CASCADE,null=True,related_name='report_from_user',blank=True)
-	report_msg=models.TextField()
- 
- 
-class AppSetting(models.Model):
-	logo_img=models.ImageField(upload_to='app_logos/')
+    report_for_trainer = models.ForeignKey(
+        Trainer, on_delete=models.CASCADE, null=True, related_name="report_for_trainer"
+    )
+    report_for_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, related_name="report_for_user"
+    )
+    report_from_trainer = models.ForeignKey(
+        Trainer,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="report_from_trainer",
+        blank=True,
+    )
+    report_from_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="report_from_user",
+        blank=True,
+    )
+    report_msg = models.TextField()
 
-	def image_tag(self):
-		return mark_safe('<img src="%s" width="80" />' % (self.logo_img.url))
+
+class AppSetting(models.Model):
+    logo_img = models.ImageField(upload_to="app_logos/")
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="80" />' % (self.logo_img.url))

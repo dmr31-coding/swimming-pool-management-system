@@ -8,6 +8,7 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("pagedetail/<int:id>", views.page_detail, name="pagedetail"),
+    path("service_details/<int:id>", views.service_detail, name="service_details"),
     path("faq", views.faq_list, name="faq"),
     path("enquiry", views.enquiry, name="enquiry"),
     path('contact',views.contact_page,name='contact_page'),

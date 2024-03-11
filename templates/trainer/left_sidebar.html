@@ -16,7 +16,7 @@
              {% if request.path == '/trainer_changepassword' %}active{% endif %}">Change Password</a>
    <a href="{% url 'messages' %}"
       class="list-group-item
-             {% if request.path == '/messages' %}active{% endif %}">Messages <span class="float-end badge bg-info mt-1">123</span></a>
+             {% if request.path == '/messages' %}active{% endif %}">Messages <span class="float-end badge bg-info mt-1">{{ msgs.count }}</span></a>
    <a href="{% url 'trainer_notifs' %}"
       class="list-group-item
              {% if request.path == '/trainer_notifs' %}active{% endif %}">Notifications <span class="float-end badge bg-info mt-1 totalunread">{{ totalUnread }}</span></a>

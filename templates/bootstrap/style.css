@@ -1,0 +1,22 @@
+/* styles.css */
+
+.card {
+    /* Set a fixed height for the card to ensure uniformity */
+    height: 400px; /* Adjust as needed */
+  }
+  
+  .card img {
+    /* Ensure images fill the card while maintaining aspect ratio */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Preserve aspect ratio */
+  }
+.img-thumbnail{
+    height: 400px;
+}
+.card-img-top {
+    width: 100%; /* Ensure image takes full width of its container */
+    height: 200px; /* Set a fixed height for the images */
+    object-fit: cover; /* Ensure images maintain aspect ratio */
+  }
+  

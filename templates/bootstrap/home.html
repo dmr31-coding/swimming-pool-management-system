@@ -58,14 +58,18 @@
 	
                     <div class="card">
  
-                        <img src="{{ service.img.url }}" class="card-img-top" alt="...">
+ 
+                        <div style="height: 200px; overflow: hidden;">
+                            <img src="{{ service.img.url }}" class="card-img-top img-fluid" alt="...">
+                        </div>
  
                         <div class="card-body">
  
                             <h3 class="card-title">{{ service.title }}</h3>
  
-                            <p class="card-text">{{ service.detail|truncatechars:5 }}</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
+                            <p class="card-text">{{ service.detail|truncatechars:100 }}</p>
+                            <a href="{% url 'service_details' service.id %}"
+                               class="btn btn-primary btn-block">Read More</a>
  
                         </div>
 	
@@ -92,7 +96,7 @@
                     <h1 class="mb-4 section-heading">About Us</h1>
 	
                     <p class="lh-base">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        At Splash Swimming, we are passionate about fostering a love for swimming and helping individuals of all ages and abilities achieve their aquatic goals...
                     </p>
 	
                     <p>
@@ -104,17 +108,21 @@
                 <div class="col-md-6 offset-1">
 	
                     <h1 class="mb-4 section-heading">
-                        Gallery <a href="#" class="float-end btn btn-info text-white mt-2">View All</a>
+                        Gallery <a href="#" class="float-end btn  text-white mt-2"></a>
                     </h1>
 	
                     <div class="gallery">
-                        {% for gimg in gimgs %}
+                        {% for gimg in gimgs|slice:":8" %}
+ 
                             <a data-lightbox="home-gallery" href="{{ gimg.img.url }}">
+ 
                                 <img src="{{ gimg.img.url }}"
                                      width="155"
                                      class="img-thumbnail"
                                      alt="{{ gimg.alt_text }}">
+ 
                             </a>
+ 
                         {% endfor %}
 	
                     </div>

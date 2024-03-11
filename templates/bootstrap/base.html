@@ -16,14 +16,45 @@
         <!-- jquery -->
         <script type="text/javascript"
                 src="{% static 'assets/jquery-3.7.1.min.js' %}"></script>
-        <title>Splash - Swimming</title>
+ 
+        <style>
+            /* Set fixed height for carousel images */
+            #carouselExampleControls .carousel-item img {
+                height: 600px;
+                /* Adjust as needed */
+                object-fit: cover;
+                /* Ensure images cover the entire container */
+            }
+
+            /* Flexbox layout for gallery */
+            .gallery {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                /* Adjust alignment as needed */
+            }
+
+            .gallery a {
+                margin-bottom: 10px;
+                /* Adjust spacing between images */
+                flex-basis: calc(25% - 10px);
+                /* Adjust to fit 4 images in one row */
+                max-width: calc(25% - 10px);
+                /* Adjust maximum width */
+            }
+
+            .gallery img {
+                width: 100%;
+                height: auto;
+            }
+        </style>
     </head>
     <body>
         <!-- Header -->
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
  
             <div class="container">
-                <a class="navbar-brand" href="{% url 'home' %}">{{logo}}</a>
+                <a class="navbar-brand" href="{% url 'home' %}">{{ logo }}</a>
  
                 <button class="navbar-toggler"
                         type="button"
@@ -55,10 +86,10 @@
  
                         </li>
  
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-sm btn-dark text-white"
-                               href="{% url 'enquiry' %}">Enquiry</a>
  
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-dark btn-sm text-white d-block d-sm-inline-block"
+                               href="{% url 'enquiry' %}">Enquiry</a>
                         </li>
  
                         <li class="nav-item dropdown">
@@ -70,27 +101,30 @@
                                aria-expanded="false">My Account</a>
  
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+ 
+ 
+                                {% if request.session.tranerLogin %}
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'trainer_dashboard' %}">Trainer Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'trainerlogout' %}">Trainer Logout</a>
+                                    </li>
+                                {% else %}
+ 
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'trainerlogin' %}">Trainer Login</a>
+                                    </li>
+                                {% endif %}
+
                                 {% if not request.user.is_authenticated %}
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'signup' %}">SignUp</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                                    </li>
  
-                                    {% if request.session.trainerLogin %}
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'trainer_dashboard' %}">Trainer Dashboard</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'trainerlogout' %}">Trainer Logout</a>
-                                        </li>
-                                    {% else %}
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'trainerlogin' %}">Trainer Login</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'signup' %}">SignUp</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'login' %}">Login</a>
-                                        </li>
- 
-                                    {% endif %}
                                 {% else %}
                                     <li>
                                         <a class="dropdown-item" href="{% url 'user_dashboard' %}">Dashboard</a>
@@ -132,7 +166,7 @@
             </p>
 
             <p>
-                © 2017–2021 Arnold GYM, Inc. ·
+                © 2017–today Splash Swimming, Inc. ·
                 <a href="{% url 'pagedetail' 2 %}">Privacy</a> ·
                 <a href="{% url 'pagedetail' 3 %}">Terms</a> .
                 <a href="{% url 'faq' %}">FAQ</a> .

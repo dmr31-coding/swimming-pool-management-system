@@ -29,6 +29,14 @@ def home(request):
     )
 
 
+# ServiceDetail
+def service_detail(request, id):
+    service = models.Service.objects.get(id=id)
+    return render(
+        request, "bootstrap/service_detailpage.html", {"service_details": service}
+    )
+
+
 # PageDetail
 def page_detail(request, id):
     page = models.Page.objects.get(id=id)
@@ -174,7 +182,7 @@ def trainerlogin(request):
 
 # Trainer Logout
 def trainerlogout(request):
-    del request.session["trainerLogin"]
+    del request.session["tranerLogin"]
     return redirect("/trainerlogin")
 
 

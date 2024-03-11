@@ -13,9 +13,12 @@
                 {% for gallery in galleries %}
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="{{ gallery.img.url }}"
-                                 class="card-img-top"
-                                 alt="{{ gallery.title }}">
+                            <div style="height: 200px; overflow: hidden;">
+ 
+                                <img src="{{ gallery.img.url }}"
+                                     class="card-img-top"
+                                     alt="{{ gallery.title }}">
+                            </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{ gallery.title }}</h5>
                                 <p class="card-text">{{ gallery.detail }}</p>

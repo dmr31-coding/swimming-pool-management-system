@@ -141,7 +141,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Splash Admin",
+    "site_title": "SplashAdmin",
     "site_header": "Library",  # Ensure correct casing here
     "order_with_respect_to": [
         "auth",

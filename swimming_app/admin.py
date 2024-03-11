@@ -1,6 +1,11 @@
 from django.contrib import admin
 
+from django.contrib.admin import AdminSite
+
+
 from . import models
+
+admin.site.site_title = "SplashAdmin"
 
 # Register your models here.
 
