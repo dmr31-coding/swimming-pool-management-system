@@ -47,6 +47,22 @@
                 width: 100%;
                 height: auto;
             }
+
+            /* Define the color for the button */
+            #khaltiButton {
+                background-color: #5E338D;
+                /* Use the desired color */
+                color: white;
+                /* Text color */
+                padding: 10px 20px;
+                /* Adjust padding as needed */
+                border: none;
+                /* Remove default button border */
+                border-radius: 5px;
+                /* Optional: Adds rounded corners */
+                cursor: pointer;
+                /* Show cursor as pointer on hover */
+            }
         </style>
     </head>
     <body>
@@ -70,6 +86,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
  
                     <ul class="navbar-nav ms-auto">
+                        <div class="container">
+                            <!-- <h1>I am implementing khalti payment gateway</h1>
+                            <h1>Put your own live secret key.Otherwise you will get error</h1> -->
+                            <form action="{% url 'initiate' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="purchase_order_id" value="{{ uuid }}"  id="pid">
+                                <input type="hidden" name="amount" value="1000" id="amt">
+                                <input type="submit" value="Pay With Khalti" name="" id="khaltiButton">
+                                <input type="hidden" name="return_url" value="http://127.0.0.1:8000">
+                            </form>
+                        </div>
  
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
@@ -152,9 +179,11 @@
                 </div>
  
             </div>
+ 
 	
         </nav>
         <!-- Header End -->
+ 
 
         {% block content %}{% endblock %}
 

@@ -1,4 +1,6 @@
-from django.urls import path
+from django.contrib import admin
+
+from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -7,6 +9,10 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="home"),
+    #khalti
+    path('initiate',views.initkhalti,name="initiate"),
+    path('verify',views.verifyKhalti,name="verify"),
+    
     path("pagedetail/<int:id>", views.page_detail, name="pagedetail"),
     path("service_details/<int:id>", views.service_detail, name="service_details"),
     path("faq", views.faq_list, name="faq"),

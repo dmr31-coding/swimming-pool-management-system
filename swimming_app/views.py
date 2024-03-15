@@ -14,18 +14,25 @@ from django.http import JsonResponse
 
 from datetime import timedelta
 
+import json
+
+import requests
+
+import uuid
+
 # Create your views here.
 
 
 # Home page
 def home(request):
+    id = uuid.uuid4()
     banners = models.Banners.objects.all()
     services = models.Service.objects.all()[:3]
     gimgs = models.GalleryImage.objects.all().order_by("-id")[:9]
     return render(
         request,
         "bootstrap/home.html",
-        {"banners": banners, "services": services, "gimgs": gimgs},
+        {"banners": banners, "services": services, "gimgs": gimgs, "uuid": id},
     )
 
 
@@ -370,3 +377,78 @@ def report_for_trainer(request):
             msg = "Invalid Response!!"
     form = forms.ReportForTrainerForm
     return render(request, "report_for_trainer.html", {"form": form, "msg": msg})
+
+
+# khalti
+def initkhalti(request):
+    url = "https://a.khalti.com/api/v2/epayment/initiate/"
+    return_url = request.POST.get("return_url")
+    website_url = request.POST.get("return_url")
+    amount = request.POST.get("amount")
+    purchase_order_id = request.POST.get("purchase_order_id")
+
+    print("url", url)
+    print("return_url", return_url)
+    print("web_url", website_url)
+    print("amount", amount)
+    print("purchase_order_id", purchase_order_id)
+    payload = json.dumps(
+        {
+            "return_url": return_url,
+            "website_url": "http://127.0.0.1:8000",
+            "amount": amount,
+            "purchase_order_id": purchase_order_id,
+            "purchase_order_name": "test",
+            "customer_info": {
+                "name": "Raju Magar",
+                "email": "rm3671323@gmail.com",
+                "phone": "9800000001",
+            },
+        }
+    )
+
+    # put your own live secet for admin
+    headers = {
+        "Authorization": "key f2e9f5b533b3495e970bf159a052d5d8",
+        "Content-Type": "application/json",
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print(json.loads(response.text))
+
+    print(response.text)
+    new_res = json.loads(response.text)
+    # print(new_res['payment_url'])
+    print(type(new_res))
+    return redirect(new_res["payment_url"])
+    return redirect("home")
+
+
+def verifyKhalti(request):
+    url = "https://a.khalti.com/api/v2/epayment/lookup/"
+    if request.method == "GET":
+        headers = {
+            "Authorization": "key b885cd9d8dc04eebb59e6f12190ae017",
+            "Content-Type": "application/json",
+        }
+        pidx = request.GET.get("pidx")
+        data = json.dumps({"pidx": pidx})
+        res = requests.request("POST", url, headers=headers, data=data)
+        print(res)
+        print(res.text)
+
+        new_res = json.loads(res.text)
+        print(new_res)
+
+        if new_res["status"] == "Completed":
+            # user = request.user
+            # user.has_verified_dairy = True
+            # user.save()
+            # perform your db interaction logic
+            pass
+
+        # else:
+        #     # give user a proper error message
+        #     raise BadRequest("sorry ")
+
+        return redirect("home")
